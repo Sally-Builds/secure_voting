@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import detectEthereumProvider from "@metamask/detect-provider";
 import Web3 from "web3";
 import { toast } from "react-toastify";
-
+import data from "../Evote.json";
 /**
  * import Layouts
  */
@@ -13,9 +13,9 @@ import MainLayout from "../containers/Layouts/MainLayout";
  * import views
  */
 import Home from "../containers/Views/Home";
-import { loadContract } from "../utils/loadContract";
 
 const Router = () => {
+  const [elections, setElections] = useState([]);
   const [web3Api, setWeb3Api] = useState({
     provider: null,
     contract: null,
@@ -26,13 +26,17 @@ const Router = () => {
   useEffect(() => {
     const loadProvider = async () => {
       const provider = await detectEthereumProvider();
-      const web3 = new Web3(provider);
-      // const contract = loadContract("Evote", provider);
+      const web3 = new Web3(provider || "ws://localhost:7545");
+      const contract = new web3.eth.Contract(
+        data.abi,
+        "0x43C982B7D7C43413f544140756165b1c0247F3F9"
+      );
+      setElections(await contract.methods.getElections().call());
       if (provider) {
         setWeb3Api({
           provider,
           web3,
-          contract: null,
+          contract,
           isInitialized: true,
         });
 
@@ -66,7 +70,10 @@ const Router = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainLayout web3={_web3Api} />}>
-            <Route path="" element={<Home />} />
+            <Route
+              path=""
+              element={<Home web3Api={_web3Api} elections={elections} />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

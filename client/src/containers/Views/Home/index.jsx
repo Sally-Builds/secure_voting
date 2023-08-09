@@ -1,9 +1,10 @@
 import React from "react";
 import { CalendarIcon } from "@heroicons/react/outline";
-// import Cards from "./Cards";
+import Cards from "./Cards";
 import carousel from "../../../assets/img/carousel4.jpg";
 
-const Home = ({ projects }) => {
+const Home = ({ elections, web3Api }) => {
+  console.log(elections);
   return (
     <>
       <div className="grid">
@@ -52,7 +53,7 @@ const Home = ({ projects }) => {
               <h4 className="text-primary">Upcoming Voting</h4>
             </div>
 
-            {/* <Cards projects={projects} /> */}
+            <Cards projects={elections} web3Api={web3Api} />
           </div>
         </section>
       </div>

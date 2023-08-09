@@ -1,56 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
-// import { useDispatch, useSelector } from "react-redux";
-// import {
-//   requestWallet,
-//   reset,
-//   getAdminAddress,
-// } from "../../store/auth/authSlice";
-// import { toast } from "react-toastify";
-// import { Link } from "react-router-dom";
 
 const Header = ({ web3 }) => {
   const [hamburgerIcon, setHamburgerIcon] = useState(false);
   const handleHamburgerState = () => setHamburgerIcon(!hamburgerIcon);
+  const [user, setUser] = useState("");
   // const [myAddress, setMyAddress] = useState("");
   // const [myAdminAddress, setMyAdminAddress] = useState("");
-  // const dispatch = useDispatch();
-  // const { message, isError, isSuccess, isLoading, isLoggedIn, adminAddress } =
-  //   useSelector((state) => state.authSlice);
 
-  // useEffect(() => {
-  //   if (isError) {
-  //     toast.error(message);
-  //   }
-  //   if (isSuccess) {
-  //     toast.success(message);
-  //   }
-  //   dispatch(reset());
-  //   dispatch(getAdminAddress());
-  //   if (isLoggedIn) {
-  //     setMyAddress(isLoggedIn.toLowerCase());
-  //   }
-  //   setMyAdminAddress(adminAddress.toLowerCase());
-  //   // console.log(myAddress);
-  //   // console.log(myAdminAddress);
-  // }, [
-  //   message,
-  //   isError,
-  //   isSuccess,
-  //   isLoading,
-  //   isLoggedIn,
-  //   dispatch,
-  //   adminAddress,
-  //   setMyAddress,
-  //   setMyAdminAddress,
-  //   myAdminAddress,
-  //   myAddress,
-  // ]);
+  useEffect(() => {
+    getAddress();
+  });
 
-  // const connectWallet = () => {
-  //   dispatch(requestWallet());
-  // };
-
+  const getAddress = async () => {
+    if (web3.provider) {
+      let account = await web3.provider.request({
+        method: "eth_requestAccounts",
+      });
+      if (account.length > 0) {
+        setUser(account[0]);
+      }
+    }
+  };
   return (
     <>
       <nav className="md:flex justify-between p-2">
@@ -105,50 +76,25 @@ const Header = ({ web3 }) => {
               Contact us
             </a>
           </li>
-          <li
-            className="m-3 border-b-2 border-gray-100 md:border-none"
-            onClick={web3.connect}
-          >
-            <button className="font-semibold text-gray-500 uppercase text-sm hover:text-gray-400 hover:bg-white bg-teal-200 border-teal-200 p-1 rounded-full tracking-wider pl-2 pr-2 border-2">
-              Connect
-            </button>
-          </li>
-          {/* <li className="m-3">
-            <button
-              onClick={connectWallet}
-              className={
-                isLoggedIn
-                  ? "hidden"
-                  : "font-semibold text-gray-500 uppercase text-sm hover:text-gray-400 hover:bg-white bg-teal-200 border-teal-200 p-1 rounded-full tracking-wider pl-2 pr-2 border-2"
-              }
+          {user ? (
+            <li
+              className="m-3 border-b-2 border-gray-100 md:border-none"
+              onClick={web3.connect}
             >
-              Connect {isLoggedIn}
-            </button>
-          </li>
-          <li className="m-3">
-            <Link
-              to="/dashboard"
-              className={
-                isLoggedIn
-                  ? "font-semibold text-gray-200 uppercase text-sm hover:text-gray-400 hover:bg-white bg-primary border-primary p-1 rounded-full tracking-wider pl-2 pr-2 border-2"
-                  : "hidden"
-              }
-            >
-              Dashboard
-            </Link>
-          </li> */}
-          {/* {myAdminAddress == myAddress ? (
-            <li className="m-3">
-              <Link
-                to="/admin"
-                className="font-semibold text-gray-500 uppercase text-sm hover:text-gray-400 hover:bg-white bg-teal-200 border-teal-200 p-1 rounded-full tracking-wider pl-2 pr-2 border-2"
-              >
-                Admin
-              </Link>
+              <span className="font-semibold text-gray-500 uppercase text-sm hover:text-gray-400 hover:bg-white bg-teal-200 border-teal-200 p-1 rounded-full tracking-wider pl-2 pr-2 border-2">
+                {user}
+              </span>
             </li>
           ) : (
-            <></>
-          )} */}
+            <li
+              className="m-3 border-b-2 border-gray-100 md:border-none"
+              onClick={web3.connect}
+            >
+              <button className="font-semibold text-gray-500 uppercase text-sm hover:text-gray-400 hover:bg-white bg-teal-200 border-teal-200 p-1 rounded-full tracking-wider pl-2 pr-2 border-2">
+                Connect
+              </button>
+            </li>
+          )}
         </ul>
       </nav>
     </>
