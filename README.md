@@ -1,4 +1,47 @@
-Running the project
+<div align="center">
+<h1>Blockchain Voting Application</h1>
+</div>
+
+**Project Overview:**
+This is a blockchain-based voting system designed to ensure secure, transparent, and tamper-proof elections. The application enables administrators to create elections, manage candidates, and oversee the voting process, while users can cast their votes securely during the election period. Built on the Ethereum blockchain, it leverages smart contracts for transparency and ensures that all actions are immutably recorded on the blockchain.
+
+**Year Developed:** 2023
+
+**Key Features:**
+
+Admin Functionality:
+
+Create elections and specify candidates.
+Set the start and end times for each election.
+Transfer ownership of the admin role to another blockchain address for flexibility.
+Voting System:
+
+Registered users can vote for candidates during the active election period.
+Each voter is restricted to one vote per election, enforced by the smart contract.
+Transparency and Security:
+
+All actions, including election creation and voting, are logged immutably on the Ethereum blockchain.
+Results are automatically calculated and displayed transparently after the election ends.
+Smart Contract Functionality:
+
+Admin address is set during contract deployment, granting exclusive control over election management.
+Ownership transfer ensures continued application governance if the admin changes.
+
+**Technologies Used:**
+
+**Frontend:** ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+
+**Smart Contracts:** ![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white)
+
+**Blockchain Network:** ![Ethereum](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white)
+
+**Blockchain Framework:** Truffle.js
+
+**Wallet Integration:** MetaMask
+
+**Website/GitHub Link:** [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Sally-Builds/secure_voting)
+
+## Running the project
 
 NB: before running these command make sure you have NODE.Js ^16.4.2 installed on you computer and also make sure npm is installed
 
